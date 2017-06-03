@@ -33,11 +33,17 @@ namespace HoldPlease
             // Add framework services.
             services.AddMvc();
 
+            services.AddDbContext<UserContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));
+
+            services.AddDbContext<ServiceContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));                
+
             services.AddDbContext<HoldPleaseContext>(options =>
                 options.UseSqlite("Data Source=HoldPlease.db"));
 
-            services.AddDbContext<UserContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("UserContext")));
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +70,8 @@ namespace HoldPlease
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DBinitialize.EnsureCreated(app.ApplicationServices);
         }
     }
 }

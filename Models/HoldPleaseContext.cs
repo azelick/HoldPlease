@@ -1,4 +1,5 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using HoldPlease.Models;
 
 namespace HoldPlease.Models
 {
@@ -10,5 +11,7 @@ namespace HoldPlease.Models
         }
 
         public DbSet<HoldPlease.Models.User> User { get; set; }
+
+        public DbSet<HoldPlease.Models.Service> Service { get; set; }
     }
 }
