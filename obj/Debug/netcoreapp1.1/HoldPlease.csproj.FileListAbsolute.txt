@@ -2,3 +2,7 @@
 /home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.json
 /home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.dev.json
 /home/josue/Documents/Projects/HoldPlease/obj/Debug/netcoreapp1.1/HoldPlease.AssemblyInfo.cs
+/home/josue/Documents/Projects/HoldPlease/obj/Debug/netcoreapp1.1/HoldPlease.dll
+/home/josue/Documents/Projects/HoldPlease/obj/Debug/netcoreapp1.1/HoldPlease.pdb
+/home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.dll
+/home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.pdb
