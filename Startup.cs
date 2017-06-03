@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using HoldPlease.Models;
+
 
 namespace HoldPlease
 {
@@ -29,6 +32,18 @@ namespace HoldPlease
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddDbContext<UserContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));
+
+            services.AddDbContext<ServiceContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));                
+
+            services.AddDbContext<HoldPleaseContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));
+
+            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +70,8 @@ namespace HoldPlease
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DBinitialize.EnsureCreated(app.ApplicationServices);
         }
     }
 }

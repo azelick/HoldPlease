@@ -3,14 +3,14 @@ namespace HoldPlease.Models
 {
     public class Service
     {
-        private int id;
-        private string name;
-        private User client;
-        private User serviceProvider;
-        private string status;
-        private string location;
-        private DateTime createdAt;
-        private DateTime endAt;
+        public int ID {get;set;}
+        public string name {get;set;}
+        public User client {get;set;}
+        public User serviceProvider {get;set;}
+        public string status {get;set;}
+        public string location {get;set;}
+        public DateTime createdAt {get;set;}
+        public DateTime endAt {get;set;}
 
         public Service()
         {
