@@ -1,0 +1,4 @@
+/home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.deps.json
+/home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.json
+/home/josue/Documents/Projects/HoldPlease/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.dev.json
+/home/josue/Documents/Projects/HoldPlease/obj/Debug/netcoreapp1.1/HoldPlease.AssemblyInfo.cs

@@ -9,7 +9,7 @@ namespace HoldPlease.Models
         }
 
         // TODO 
-        public Service GetRequests(int serviceId)
+        public Service GetRequest(int serviceId)
         {
             return null; 
         }
