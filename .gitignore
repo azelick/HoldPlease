@@ -77,3 +77,5 @@ _[Ss]cripts
 /bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.dev.json
 /bin/Debug/netcoreapp1.1/HoldPlease.deps.json
 /obj/Debug/netcoreapp1.1/HoldPlease.AssemblyInfo.cs
+/HoldPlease.userprefs
+/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.json
