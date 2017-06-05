@@ -52,6 +52,12 @@ namespace HoldPlease
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            
+            services.AddDbContext<HoldPleaseContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));
+
+            services.AddDbContext<ServiceContext>(options =>
+                options.UseSqlite("Data Source=HoldPlease.db"));       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +89,8 @@ namespace HoldPlease
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            DBinitialize.EnsureCreated(app.ApplicationServices);
         }
     }
 }
