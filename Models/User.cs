@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HoldPlease.Models
 {
-    // Add profile data for application users by adding properties to the User class
+    // Add profile data for application users by adding properties to the ApplicationUser class
     public class User : IdentityUser
     {
         public string name {get; set;}

@@ -10,7 +10,7 @@ namespace HoldPlease.Models
         {
         }
 
-        // public DbSet<HoldPlease.Models.User> User { get; set; }
+        // public DbSet<HoldPlease.Models.ApplicationUser> User { get; set; }
 
         public DbSet<HoldPlease.Models.Service> Service { get; set; }
     }
