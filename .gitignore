@@ -73,9 +73,4 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
-/obj/HoldPlease.csproj.nuget.g.props
-/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.dev.json
-/bin/Debug/netcoreapp1.1/HoldPlease.deps.json
-/obj/Debug/netcoreapp1.1/HoldPlease.AssemblyInfo.cs
 /HoldPlease.userprefs
-/bin/Debug/netcoreapp1.1/HoldPlease.runtimeconfig.json
