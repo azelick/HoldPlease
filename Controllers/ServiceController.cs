@@ -53,7 +53,7 @@ namespace HoldPlease.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,name,clientId,serviceProviderId,status,location,createdAt,endAt")] Service service)
+        public async Task<IActionResult> Create([Bind("ID,name,clientId,serviceProviderId,status,location,startAt,endAt")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace HoldPlease.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,name,clientId,serviceProviderId,status,location,createdAt,endAt")] Service service)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,name,clientId,serviceProviderId,status,location,startAt,endAt")] Service service)
         {
             if (id != service.ID)
             {
