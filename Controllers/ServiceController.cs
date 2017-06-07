@@ -11,10 +11,12 @@ namespace HoldPlease.Controllers
 {
     public class ServiceController : Controller
     {
+        // gets a hold of the db
         private readonly HoldPleaseContext _context;
 
         public ServiceController(HoldPleaseContext context)
         {
+            // initialize the context 
             _context = context;    
         }
 
