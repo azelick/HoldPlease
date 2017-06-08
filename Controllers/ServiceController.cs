@@ -109,7 +109,6 @@ namespace HoldPlease.Controllers
         [Authorize]
         public IActionResult NewRequest()
         {
-            
             return View();
         }
 
@@ -123,6 +122,8 @@ namespace HoldPlease.Controllers
         {
             if (ModelState.IsValid)
             {
+                service.clientId = User.Identity.Name;
+                service.status = "Requested";
                 _context.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
