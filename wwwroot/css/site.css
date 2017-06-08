@@ -48,3 +48,8 @@ textarea {
         display: none;
     }
 }
+
+#google-map {
+    overflow: hidden;
+    height: 25em;
+}
