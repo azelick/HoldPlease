@@ -87,12 +87,13 @@ namespace HoldPlease.Controllers
         }
 
         // POST: Service/Accept/5
-        public async Task<IActionResult> Accept(int? serviceId)
+        public async Task<IActionResult> Accept(int? id)
         {
-            if (serviceId == null)
+            
+            if (id == null)
                 return NotFound();
 
-            var service = await _context.Service.SingleOrDefaultAsync(mx => mx.ID == serviceId);
+            var service = await _context.Service.SingleOrDefaultAsync(mx => mx.ID == id);
             if (service == null)
                 return NotFound();
 
