@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using HoldPlease.Models;
 using HoldPlease.Models.ManageViewModels;
 using HoldPlease.Services;
+using Newtonsoft.Json;
 
 namespace HoldPlease.Controllers
 {
@@ -64,8 +65,21 @@ namespace HoldPlease.Controllers
                 PhoneNumber = await _userManager.GetPhoneNumberAsync(user),
                 TwoFactor = await _userManager.GetTwoFactorEnabledAsync(user),
                 Logins = await _userManager.GetLoginsAsync(user),
-                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
+                BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user),
+
             };
+            if(user.costAvailability != null)
+            {
+               Dictionary<string, string> costAvailability = JsonConvert.DeserializeObject<Dictionary<string, string>>(user.costAvailability);
+
+               ViewBag.start = Convert.ToDateTime(costAvailability["start"]).ToString("h:mm tt");
+               ViewBag.end = Convert.ToDateTime(costAvailability["end"]).ToString("h:mm tt");
+               ViewBag.payPerHour = costAvailability["payPerHour"];
+            } else {
+                ViewBag.start = "";
+                ViewBag.end = "";
+                ViewBag.payPerHour = "";
+            }
             return View(model);
         }
 
@@ -214,6 +228,46 @@ namespace HoldPlease.Controllers
         public IActionResult ChangePassword()
         {
             return View();
+        }
+
+        //
+        // GET: /Manage/ChangeSchedule
+        [HttpGet]
+        public async Task<IActionResult> ChangeSchedule()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                Dictionary<string, string> availabilityDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(user.costAvailability);
+                ViewBag.start = availabilityDict["start"];
+                ViewBag.end = availabilityDict["end"];
+                ViewBag.payPerHour = availabilityDict["payPerHour"];
+            }
+            return View();
+        }
+        
+        // POST: /Manage/ChangeSchedule
+        [HttpPost]
+        public async Task<IActionResult> ChangeSchedule(string start, string end, string payPerHour)
+        {
+            Dictionary<string, string> costAvailability = new Dictionary<string, string>()
+            {
+                {"start", start},
+                {"end", end},
+                {"payPerHour", payPerHour}
+            };
+            string json = JsonConvert.SerializeObject(costAvailability);
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                user.costAvailability = json;
+                var status = await _userManager.UpdateAsync(user);
+                if(status != null)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            return NotFound();
         }
 
         //
