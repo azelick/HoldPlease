@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using HoldPlease.Models;
 
 namespace HoldPlease.Controllers
@@ -64,7 +65,8 @@ namespace HoldPlease.Controllers
             return View(service);
         }
         
-        // GET: Service/Request
+        // GET: Service/NewRequest
+        [Authorize]
         public IActionResult NewRequest()
         {
             
@@ -72,7 +74,7 @@ namespace HoldPlease.Controllers
         }
 
         
-        // POST: Service/Create
+        // POST: Service/NewRequest
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
