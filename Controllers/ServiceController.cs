@@ -52,7 +52,10 @@ namespace HoldPlease.Controllers
                 return NotFound();
 
             // TODO check if the current user is the serviceProvider for the service.
-            // If they are return a particular service
+            // If they are return a particular service This should return something
+            // smarter than NotFound(). But i didn't want to spend too much time on it.
+            if (service.serviceProviderId == User.Identity.Name)
+                return NotFound();
 
             return View(service);
         }
@@ -75,8 +78,9 @@ namespace HoldPlease.Controllers
             service.serviceProviderId = serviceProvider;
             // add the service back to the DB
             _context.Service.Add(service);
+			await _context.SaveChangesAsync();
 
-            return View(service);
+			return View(service);
         }
 
         // GET: Service/Create
