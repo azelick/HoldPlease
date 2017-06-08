@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,36 @@ namespace HoldPlease.Controllers
             }
 
             return View(service);
+        }
+
+        // GET: Service/AddNotification/5/3
+        public async Task<IActionResult> AddNotification(string id, string userId)
+        {
+            int intId = 0;
+
+            Int32.TryParse(id, out intId);
+
+            
+
+            var service = await _context.Service
+                .SingleOrDefaultAsync(m => m.ID == intId);
+
+            var users = _userManager.Users.Where(u => u.Id == userId).ToList();
+            if (users.Count > 0)
+            {
+                var user = users[0];
+                if (service.notified == null)
+                {
+                    service.notified = user.Email;
+                } else {
+                    service.notified = service.notified + "," + user.Email;
+                }
+
+                await _context.SaveChangesAsync();
+                
+                return StatusCode(200);
+            }
+            return StatusCode(500);
         }
 
         // GET: Service/BrowseProviders/5

@@ -16,10 +16,15 @@
                 <dl class="service-provider-card">
                     <dt>
                         <h4><strong>Name:</strong> @item.GetName()</h4>
-                        <h4><strong>Hourly Rate: </strong>$ @item.GetPayPerHour()</h4>
+                        <h4><strong>Hourly Rate: </strong>$@item.GetPayPerHour()</h4>
                         <h4><strong>Start: </strong>@Html.DisplayFor(model => model.startAt)</h4>
                         <h4><strong>End: </strong>@Html.DisplayFor(model => model.endAt)</h4>
-                        <a href="#">Request</a>
+                        @if (@Model.HasNotified(item.Email))
+                        {
+                            <span class="green">Requested</span>
+                        } else {
+                            <a href="#" class="request-provider" data-serviceId="@Model.ID" data-userId="@item.Id">Request</a>
+                        }
                     </dt>
                 </dl>
             </div>
