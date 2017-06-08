@@ -5,8 +5,8 @@ namespace HoldPlease.Models
     {
         public int ID {get;set;}
         public string name {get;set;}
-        public int clientId {get;set;}
-        public int serviceProviderId {get;set;}
+        public string clientId {get;set;}
+        public string serviceProviderId {get;set;}
         public string status {get;set;}
         public string location {get;set;}
         public DateTime startAt {get;set;}
