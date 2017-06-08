@@ -88,13 +88,30 @@ namespace HoldPlease.Controllers
         {
             return View();
         }
-       
+
+        // POST: Service/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("ID,name,clientId,serviceProviderId,status,location,startAt,endAt")] Service service)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(service);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(service);
+        }
+        
         // GET: Service/NewRequest
         [Authorize]
         public IActionResult NewRequest()
         {
             return View();
         }
+
         
         // POST: Service/NewRequest
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
