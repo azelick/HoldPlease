@@ -1,0 +1,54 @@
+﻿@model HoldPlease.Models.Service
+
+@{
+    ViewData["Title"] = "Accept";
+}
+
+<h2>Accept a service</h2>
+
+<div>
+    <h4>Service</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.clientId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.clientId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.startAt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.startAt)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.endAt)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.endAt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Accept" asp-route-id="@Model.ID">AcceptedService</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
