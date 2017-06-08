@@ -83,6 +83,12 @@ namespace HoldPlease.Controllers
 			return View(service);
         }
 
+        // GET: Service/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+       
         // GET: Service/NewRequest
         [Authorize]
         public IActionResult NewRequest()
