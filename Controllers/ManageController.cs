@@ -236,7 +236,7 @@ namespace HoldPlease.Controllers
         public async Task<IActionResult> ChangeSchedule()
         {
             var user = await GetCurrentUserAsync();
-            if (user != null)
+            if (user != null && user.costAvailability != null)
             {
                 Dictionary<string, string> availabilityDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(user.costAvailability);
                 ViewBag.start = availabilityDict["start"];

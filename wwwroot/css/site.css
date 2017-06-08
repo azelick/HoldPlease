@@ -53,3 +53,11 @@ textarea {
     overflow: hidden;
     height: 25em;
 }
+
+.service-provider-card {
+    border: 1px solid black;
+    padding-left: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+}

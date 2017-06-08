@@ -1,9 +1,13 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using HoldPlease.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 
 namespace HoldPlease.Controllers
@@ -11,10 +15,13 @@ namespace HoldPlease.Controllers
     public class ServiceController : Controller
     {
         private readonly HoldPleaseContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ServiceController(HoldPleaseContext context)
+        public ServiceController(HoldPleaseContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;    
+            _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Service
@@ -37,6 +44,44 @@ namespace HoldPlease.Controllers
             {
                 return NotFound();
             }
+
+            return View(service);
+        }
+
+        // GET: Service/BrowseProviders/5
+        public async Task<IActionResult> BrowseProviders(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var service = await _context.Service
+                .SingleOrDefaultAsync(m => m.ID == id);
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            var users = _userManager.Users.Where(u => u.costAvailability != null).ToList();
+            List<ApplicationUser> matchingUsers = new List<ApplicationUser>();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                
+                if (users[i].costAvailability != null)
+                {
+                    Dictionary<string, string> costAvailability = JsonConvert.DeserializeObject<Dictionary<string, string>>(users[i].costAvailability);
+                    var startTime = Convert.ToDateTime(costAvailability["start"]);
+                    var endTime = Convert.ToDateTime(costAvailability["end"]);
+                    if (service.startAt.TimeOfDay >= startTime.TimeOfDay && service.endAt.TimeOfDay <= endTime.TimeOfDay)
+                    {
+                        matchingUsers.Add(users[i]);
+                    }
+                }
+
+            }
+            ViewBag.matchingUsers = matchingUsers;
 
             return View(service);
         }
@@ -126,7 +171,7 @@ namespace HoldPlease.Controllers
                 service.status = "Requested";
                 _context.Add(service);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("BrowseProviders", new {id = service.ID});
             }
             return View(service);
         }
