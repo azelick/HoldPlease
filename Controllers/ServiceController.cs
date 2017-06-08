@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HoldPlease.Models;
+
 
 namespace HoldPlease.Controllers
 {
@@ -39,6 +37,44 @@ namespace HoldPlease.Controllers
             {
                 return NotFound();
             }
+
+            return View(service);
+        }
+
+        // POST: Service/Accept/5
+        public async Task<IActionResult> Accept(int? serviceId)
+        {
+            if (serviceId == null)
+                return NotFound();
+
+            var service = await _context.Service.SingleOrDefaultAsync(mx => mx.ID == serviceId);
+            if (service == null)
+                return NotFound();
+
+            // TODO check if the current user is the serviceProvider for the service.
+            // If they are return a particular service
+
+            return View(service);
+        }
+
+        // POST: Service/AcceptService/4
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AcceptedService(int? serviceId)
+        {
+            //we want to update the database to say that a particular user 
+            //is now the service provider. After that we 
+            if (serviceId == null)
+                return NotFound();
+
+            // get the service from the db
+            var service = await _context.Service.SingleOrDefaultAsync(m => m.ID == serviceId);
+            // get the current service 
+            var serviceProvider = User.Identity.Name;
+            // assign the service provider as the services provider
+            service.serviceProviderId = serviceProvider;
+            // add the service back to the DB
+            _context.Service.Add(service);
 
             return View(service);
         }
