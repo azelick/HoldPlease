@@ -1,15 +1,13 @@
 @model HoldPlease.Models.Service
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "NewRequest";
 }
 
-<h2>Create</h2>
-
-<form asp-action="Create">
+<h2>Request a Spot Holder</h2>
+<hr />
+<form asp-action="NewRequest">
     <div class="form-horizontal">
-        <h4>Service</h4>
-        <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="name" class="col-md-2 control-label">Service Name</label>
