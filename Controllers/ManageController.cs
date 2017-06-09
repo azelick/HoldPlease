@@ -116,7 +116,7 @@ namespace HoldPlease.Controllers
         }
 
         // GET: /Manage/RequestedServices/4
-        public async Task<IActionResult> RequestedServices(int? id)
+        public async Task<IActionResult> RequestedServices()
         {
 
             ViewBag.services = new List<Service>();
@@ -127,10 +127,13 @@ namespace HoldPlease.Controllers
                 var services = await _context.Service.ToListAsync();
                 for (int i=0; i<services.Count;++i)
                 {
-                    var currentNotified = services[i].notified.Split(',');
-                    if (currentNotified.Any(str => str.Contains(user.Email)))
+                    if(services[i].notified != null)
                     {
-                        ViewBag.services.Add(services[i]);
+                        var currentNotified = services[i].notified.Split(',');
+                        if (currentNotified.Any(str => str.Contains(user.Email)))
+                        {
+                            ViewBag.services.Add(services[i]);
+                        }
                     }
                 }
                 // var notifiedList = notified.Split(',');
