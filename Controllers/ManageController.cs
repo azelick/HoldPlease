@@ -11,6 +11,8 @@ using HoldPlease.Models;
 using HoldPlease.Models.ManageViewModels;
 using HoldPlease.Services;
 using Newtonsoft.Json;
+using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace HoldPlease.Controllers
 {
@@ -23,6 +25,7 @@ namespace HoldPlease.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly HoldPleaseContext _context;
 
         public ManageController(
           UserManager<ApplicationUser> userManager,
@@ -30,9 +33,11 @@ namespace HoldPlease.Controllers
           IOptions<IdentityCookieOptions> identityCookieOptions,
           IEmailSender emailSender,
           ISmsSender smsSender,
-          ILoggerFactory loggerFactory)
+          ILoggerFactory loggerFactory,
+          HoldPleaseContext context)
         {
             _userManager = userManager;
+            _context = context;
             _signInManager = signInManager;
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
@@ -108,6 +113,31 @@ namespace HoldPlease.Controllers
         public IActionResult AddPhoneNumber()
         {
             return View();
+        }
+
+        // GET: /Manage/RequestedServices/4
+        public async Task<IActionResult> RequestedServices(int? id)
+        {
+
+            ViewBag.services = new List<Service>();
+            
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                var services = await _context.Service.ToListAsync();
+                for (int i=0; i<services.Count;++i)
+                {
+                    var currentNotified = services[i].notified.Split(',');
+                    if (currentNotified.Any(str => str.Contains(user.Email)))
+                    {
+                        ViewBag.services.Add(services[i]);
+                    }
+                }
+                // var notifiedList = notified.Split(',');
+                // notifiedList.Any(str => str.Contains(email));
+                return View();
+            }
+            return NotFound();
         }
 
         //

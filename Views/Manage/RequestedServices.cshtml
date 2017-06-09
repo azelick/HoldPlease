@@ -1,0 +1,27 @@
+@model HoldPlease.Models.ApplicationUser
+@{
+    ViewData["Title"] = "Available Services";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    @foreach (var item in ViewBag.services)
+    {
+        <div class="col-md-6">
+            <dl class="service-provider-card">
+                <dt>
+                    <h4><strong>Name:</strong> @item.name</h4>
+                    <h4><strong>Start At:</strong> @item.startAt</h4>
+                    <h4><strong>End At:</strong> @item.endAt</h4>
+                    <h4><strong>Location:</strong> @item.location</h4>
+                    <a asp-controller="Service" asp-action="ChangeStatus" asp-route-id="@item.ID">Accept Service</a>
+                </dt>
+            </dl>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
