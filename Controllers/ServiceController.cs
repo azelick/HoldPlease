@@ -49,6 +49,7 @@ namespace HoldPlease.Controllers
             return View(service);
         }
 
+        // Add a notification for a user when a service is accepted.
         // GET: Service/AddNotification/5/3
         public async Task<IActionResult> AddNotification(string id, string userId)
         {
