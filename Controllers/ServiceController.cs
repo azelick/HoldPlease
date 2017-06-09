@@ -117,23 +117,56 @@ namespace HoldPlease.Controllers
             return View(service);
         }
 
-        // POST: Service/Accept/5
-        public async Task<IActionResult> Accept(int? id)
+        // GET: Service/ChangeStatus/5
+        [Authorize]
+        public async Task<IActionResult> ChangeStatus(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var service = await _context.Service.SingleOrDefaultAsync(m => m.ID == id);
+            if (service == null)
+            {
+                return NotFound();
+            }
+            return View(service);
+        }
+
+        // POST: Service/ChangeService/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeService(int id, [Bind("status")] Service service)
         {
             
-            if (id == null)
+            if (id != service.ID)
+            {
                 return NotFound();
+            }
 
-            var service = await _context.Service.SingleOrDefaultAsync(mx => mx.ID == id);
-            if (service == null)
-                return NotFound();
-
-            // TODO check if the current user is the serviceProvider for the service.
-            // If they are return a particular service This should return something
-            // smarter than NotFound(). But i didn't want to spend too much time on it.
-            if (service.serviceProviderId == User.Identity.Name)
-                return NotFound();
-
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(service);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ServiceExists(service.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return View(service);
+            }
             return View(service);
         }
 

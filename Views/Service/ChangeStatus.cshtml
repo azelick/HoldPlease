@@ -1,0 +1,43 @@
+﻿@model HoldPlease.Models.Service
+
+@{
+    ViewData["Title"] = "Accept";
+    var statuses = new List<string>{"Requested", "Accepted", "In Progress", "Completed"};
+}
+
+<h2>Change Service Status</h2>
+<div class="row">
+    <div class="col-md-6">
+        <dl class="service-provider-card">
+            <dt>
+                <h4><strong>Name:</strong> @Model.name</h4>
+                <h4><strong>Start At:</strong> @Model.startAt</h4>
+                <h4><strong>End At:</strong> @Model.endAt</h4>
+                <h4><strong>Location:</strong> @Model.location</h4>
+                <form asp-action="Edit">
+                    <div class="form-horizontal">
+                    <input type="hidden" asp-for="ID" />
+                        <div class="form-group">
+                            <label asp-for="status" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <select asp-for="status" class="form-control" />
+                                    @foreach(var item in statuses)
+                                    {
+                                        <option value="item" @if(item == @Model.status){"selected"}>@item</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="status" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="Update Service Status" class="btn btn-default" />
+                </form>                
+                
+            </dt>
+        </dl>
+    </div>
+</div>
+<div>
+    <a asp-action="Accept" asp-route-id="@Model.ID">AcceptedService</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
